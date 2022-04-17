@@ -31,29 +31,29 @@ while cap.isOpened():
         confidences=[]
         class_ids=[]
 
-        # VANSHITA
     
-    #     for output in layerOutputs:
-    #         for detection in output:
-    #             scores=detection[5:]
-    #             class_id=np.argmax(scores)
-    #             confidence = scores[class_id]
-    #             if confidence>0.5:
-    #                 centre_x=int(detection[0]*width)
-    #                 centre_y=int(detection[1]*height)
-    #                 w=int(detection[2]*width)
-    #                 h=int(detection[3]*height)
+    
+        for output in layerOutputs:
+            for detection in output:
+                scores=detection[5:]
+                class_id=np.argmax(scores)
+                confidence = scores[class_id]
+                if confidence>0.5:
+                    centre_x=int(detection[0]*width)
+                    centre_y=int(detection[1]*height)
+                    w=int(detection[2]*width)
+                    h=int(detection[3]*height)
                 
-    #                 x=int(centre_x-w/2)
-    #                 y=int(centre_y-h/2)
+                    x=int(centre_x-w/2)
+                    y=int(centre_y-h/2)
                 
-    #                 boxes.append([x,y,w,h])
-    #                 confidences.append((float(confidence)))
-    #                 class_ids.append(class_id)
-    #    # print(len(boxes))      
-    #     indexes=cv2.dnn.NMSBoxes(boxes,confidences,0.5,0.4)
-    #     font= cv2.FONT_HERSHEY_PLAIN
-    #     colors= np.random.uniform(0,255,size=(len(boxes),3))
+                    boxes.append([x,y,w,h])
+                    confidences.append((float(confidence)))
+                    class_ids.append(class_id)
+       # print(len(boxes))      
+        indexes=cv2.dnn.NMSBoxes(boxes,confidences,0.5,0.4)
+        font= cv2.FONT_HERSHEY_PLAIN
+        colors= np.random.uniform(0,255,size=(len(boxes),3))
    
 #    TANMAY
 
