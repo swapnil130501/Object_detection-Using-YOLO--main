@@ -6,14 +6,14 @@ classes=[]
 with open('coco.names', 'r') as f:
     obj_names= f.read().splitlines()
 classes = [name.split(',')[0] for name in obj_names]
-# print(classes)
-#%%
+  print(classes)
+
 net= cv2.dnn.readNet('yolov3.weights','yolov3.cfg')
 cap=cv2.VideoCapture(0)
 frame_width = int(cap.get(3))
 frame_height = int(cap.get(4))
-#out = cv2.VideoWriter('video_result.avi', cv2.VideoWriter_fourcc(*'MJPG'), 10, (frame_width, frame_height))
-#%%
+out = cv2.VideoWriter('video_result.avi', cv2.VideoWriter_fourcc(*'MJPG'), 10, (frame_width, frame_height))
+
 while cap.isOpened():
     ret, frame = cap.read()
     img=frame
@@ -50,29 +50,27 @@ while cap.isOpened():
                     boxes.append([x,y,w,h])
                     confidences.append((float(confidence)))
                     class_ids.append(class_id)
-       # print(len(boxes))      
+         print(len(boxes))      
         indexes=cv2.dnn.NMSBoxes(boxes,confidences,0.5,0.4)
         font= cv2.FONT_HERSHEY_PLAIN
         colors= np.random.uniform(0,255,size=(len(boxes),3))
    
-#    TANMAY
 
-    #     if len(indexes)> 0:
-        
-    #         for i in indexes.flatten():
-    #             x,y,w,h= boxes[i]
-    #             label= str(classes[class_ids[i]])
-    #             confidence=str(round(confidences[i],2))
-    #             color=colors[i]
-    #             cv2.rectangle(img,(x,y),(x+w,y+h),color,2)
-    #             cv2.putText(img,label+" "+confidence,(x,y-10),font,1,(255,255,255),2)
-    #             #cv2.putText(img,"fps=",fps, (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255) ,2)
-    #     cv2.imshow("image",img)
-    #     #out.write(img)
-    #     key = cv2.waitKey(20)
-    #     if key == ord('q'):
-    #         break
-    # else:
-    #     break
+         if len(indexes)> 0:
+             for i in indexes.flatten():
+                 x,y,w,h= boxes[i]
+                 label= str(classes[class_ids[i]])
+                 confidence=str(round(confidences[i],2))
+                 color=colors[i]
+                 cv2.rectangle(img,(x,y),(x+w,y+h),color,2)
+                 cv2.putText(img,label+" "+confidence,(x,y-10),font,1,(255,255,255),2)
+                 cv2.putText(img,"fps=",fps, (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255) ,2)
+         cv2.imshow("image",img)
+         out.write(img)
+         key = cv2.waitKey(20)
+         if key == ord('q'):
+             break
+     else:
+         break
 cap.release()  
 cv2.destroyAllWindows()
